@@ -17,11 +17,5 @@ resource "digitalocean_droplet" "my-vm" {
 	ssh_keys = [data.digitalocean_ssh_key.terraform.fingerprint, digitalocean_ssh_key.my_public_key.fingerprint]
 	tags     = [var.email, "devops", var.task_name]
 	
-	connection {
-		host        = self.ipv4_address
-		type	    = "ssh"
-		user        = "root"
-		private_key = file(var.private_key)
-	}
 }
 
