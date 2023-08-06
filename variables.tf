@@ -22,9 +22,6 @@ variable "email" {
 	type = string
 }
 
-variable "private_key" {
-	type = string
-}
 
 variable "task_name" {
 	type = string
