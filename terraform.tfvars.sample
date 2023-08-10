@@ -1,7 +1,11 @@
+do_token = 
 my_public_key=
 vm_image=
 vm_name=
 region=
 rm_size=
 email=
-task_name=
+task_name =
+access_key =
+secret_key =
+server_count = 

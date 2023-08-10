@@ -8,8 +8,13 @@ data "digitalocean_ssh_key" "terraform" {
         name = "REBRAIN.SSH.PUB.KEY"
 }
 
+data "aws_route53_zone" "primary" {
+	name = "devops.rebrain.srwx.net"
+}
+
 
 resource "digitalocean_droplet" "my-vm" {
+	count    = var.server_count
 	image    = var.vm_image
 	name     = var.vm_name
 	region   = var.region
@@ -19,3 +24,11 @@ resource "digitalocean_droplet" "my-vm" {
 	
 }
 
+resource "aws_route53_record" "terraform-4" {
+	count   = var.server_count
+	zone_id = data.aws_route53_zone.primary.zone_id
+	name    = "ivan-abramenko-${count.index}.devops.rebrain.srwx.net"
+	type    = "A"
+	ttl     = "300"
+	records = [digitalocean_droplet.my-vm[count.index].ipv4_address]
+}
