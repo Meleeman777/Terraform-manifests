@@ -1,4 +1,4 @@
-variable private_key {}
+variable "private_key" {}
 variable "server_count" {}
 variable "do_token" {}
 variable "my_public_key" {}
