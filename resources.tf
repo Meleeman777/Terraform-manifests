@@ -40,10 +40,6 @@ resource "digitalocean_droplet" "my-vm" {
                    ]
 
               }
-#	      provisioner "local-exec" {
-#                 command = "echo \"$(element(random_password.secret.*.result', count.index)}\" >> output.txt"
-#              }
-
      
 }
 
