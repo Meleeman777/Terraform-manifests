@@ -21,6 +21,18 @@ resource "digitalocean_droplet" "my-vm" {
 	size     = var.rm_size
 	ssh_keys = [data.digitalocean_ssh_key.terraform.fingerprint, digitalocean_ssh_key.my_public_key.fingerprint]
 	tags     = [var.email, "devops", var.task_name]
+          connection {
+            type        = "ssh"
+            user        = "root"
+            private_key = var.private_key
+            host        = self.ipv4_address
+        }
+              provisioner "remote-exec" {
+                  inline = [
+                  "echo 'root:Password123' | sudo chpasswd"
+                   ]
+
+              }
       
 }
 
