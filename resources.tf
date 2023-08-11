@@ -12,6 +12,13 @@ data "aws_route53_zone" "primary" {
 	name = "devops.rebrain.srwx.net"
 }
 
+resource "random_password" "secret" {
+	count            = var.server_count
+	length           = 16
+	special          = true
+	override_special = "!#$%&*()-_=+[]{}:?"
+}
+
 
 resource "digitalocean_droplet" "my-vm" {
 	count    = var.server_count
@@ -29,11 +36,15 @@ resource "digitalocean_droplet" "my-vm" {
         }
               provisioner "remote-exec" {
                   inline = [
-                  "echo 'root:Password123' | sudo chpasswd"
+                  "/usr/bin/echo \"root:${element(random_password.secret.*.result, count.index)}\" | sudo chpasswd"
                    ]
 
               }
-      
+#	      provisioner "local-exec" {
+#                 command = "echo \"$(element(random_password.secret.*.result', count.index)}\" >> output.txt"
+#              }
+
+     
 }
 
 resource "aws_route53_record" "terraform-4" {
@@ -43,4 +54,9 @@ resource "aws_route53_record" "terraform-4" {
 	type    = "A"
 	ttl     = "300"
 	records = [for i in local.vps_ip : digitalocean_droplet.my-vm[0].ipv4_address]
+}
+
+
+output "password" {
+	value = [for k in random_password.secret: nonsensitive(k.result)]
 }
