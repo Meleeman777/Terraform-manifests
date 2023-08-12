@@ -1,3 +1,7 @@
+variable "devs" {
+  type    = list
+  default = ["abrams-lb1", "abrams-lb2"]
+}
 variable "private_key" {
 	type = string
 }

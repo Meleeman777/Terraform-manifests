@@ -21,9 +21,9 @@ resource "random_password" "secret" {
 
 
 resource "digitalocean_droplet" "my-vm" {
-	count    = var.server_count
+	count    = length(var.devs)
 	image    = var.vm_image
-	name     = join("",[var.vm_name, "0", count.index+1])
+	name     = format("%s-%s", var.vm_name, count.index)
 	region   = var.region
 	size     = var.rm_size
 	ssh_keys = [data.digitalocean_ssh_key.terraform.fingerprint, digitalocean_ssh_key.my_public_key.fingerprint]
@@ -43,10 +43,10 @@ resource "digitalocean_droplet" "my-vm" {
      
 }
 
-resource "aws_route53_record" "terraform-4" {
-	count   = var.server_count
+resource "aws_route53_record" "terraform-8" {
+	count   = length(var.devs)
 	zone_id = data.aws_route53_zone.primary.zone_id
-	name    = "ivan-abramenko-${count.index}"
+	name    = var.devs[count.index]
 	type    = "A"
 	ttl     = "300"
 	records = [for i in local.vps_ip : digitalocean_droplet.my-vm[count.index].ipv4_address]
