@@ -31,12 +31,12 @@ resource "digitalocean_droplet" "my-vm" {
           connection {
             type        = "ssh"
             user        = "root"
-            private_key = var.private_key
+            private_key = file(var.private_key)
             host        = self.ipv4_address
         }
               provisioner "remote-exec" {
                   inline = [
-                  "/usr/bin/echo \"root:${element(random_password.secret.*.result, count.index)}\" | sudo chpasswd"
+                  "/usr/bin/echo \"root:${element(random_password.secret[*].result, count.index)}\" | sudo chpasswd"
                    ]
 
               }
@@ -49,10 +49,7 @@ resource "aws_route53_record" "terraform-4" {
 	name    = "ivan-abramenko-${count.index}"
 	type    = "A"
 	ttl     = "300"
-	records = [for i in local.vps_ip : digitalocean_droplet.my-vm[0].ipv4_address]
+	records = [for i in local.vps_ip : digitalocean_droplet.my-vm[count.index].ipv4_address]
 }
 
 
-output "password" {
-	value = [for k in random_password.secret: nonsensitive(k.result)]
-}
