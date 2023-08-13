@@ -17,7 +17,7 @@ data "aws_route53_zone" "primary" {
 }
 
 resource "random_password" "secret" {
-	count            = var.server_count
+	count            = length(var.devs)
 	length           = 16
 	special          = true
 	override_special = "!#$%&*()-_=+[]{}:?"
