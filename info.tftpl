@@ -1,0 +1,10 @@
+%{ for index, names in names ~}
+${index + 1}: ${names}.rebrain.srwx.net
+%{ endfor ~}
+%{ for ips in ips  ~}
+${ips}
+%{ endfor ~}
+%{ for pass in pass  ~}
+${pass}
+%{ endfor ~}
+

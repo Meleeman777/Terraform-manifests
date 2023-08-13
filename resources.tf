@@ -4,9 +4,13 @@ resource "digitalocean_ssh_key" "my_public_key" {
 }
 
 
-data "digitalocean_ssh_key" "terraform" {
-        name = "REBRAIN.SSH.PUB.KEY"
+data "external" "ssh_rebrain" {
+	program = ["bash", "./key.sh"]
+	query = {
+		do_token = var.do_token
+	}
 }
+
 
 data "aws_route53_zone" "primary" {
 	name = "devops.rebrain.srwx.net"
@@ -26,7 +30,7 @@ resource "digitalocean_droplet" "my-vm" {
 	name     = format("%s-%s", var.vm_name, count.index)
 	region   = var.region
 	size     = var.rm_size
-	ssh_keys = [data.digitalocean_ssh_key.terraform.fingerprint, digitalocean_ssh_key.my_public_key.fingerprint]
+	ssh_keys = [digitalocean_ssh_key.my_public_key.fingerprint , data.external.ssh_rebrain.result.fingerprint]
 	tags     = [var.email, "devops", var.task_name]
           connection {
             type        = "ssh"
@@ -49,7 +53,16 @@ resource "aws_route53_record" "terraform-8" {
 	name    = var.devs[count.index]
 	type    = "A"
 	ttl     = "300"
-	records = [for i in local.vps_ip : digitalocean_droplet.my-vm[count.index].ipv4_address]
+	records = [digitalocean_droplet.my-vm[count.index].ipv4_address]
 }
 
 
+resource "local_file" "info" {
+        content = templatefile(
+	          "info.tftpl", {
+			names = aws_route53_record.terraform-8[*].name,
+			ips = digitalocean_droplet.my-vm[*].ipv4_address
+			pass = random_password.secret[*].result
+			})
+        filename = "inventory.txt"
+}
