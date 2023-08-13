@@ -24,7 +24,7 @@ resource "random_password" "secret" {
 }
 
 
-resource "digitalocean_droplet" "my-vm" {
+resource "digitalocean_droplet" "my_vm" {
 	count    = length(var.devs)
 	image    = var.vm_image
 	name     = format("%s-%s", var.vm_name, count.index)
@@ -47,21 +47,21 @@ resource "digitalocean_droplet" "my-vm" {
      
 }
 
-resource "aws_route53_record" "terraform-8" {
+resource "aws_route53_record" "terraform_8" {
 	count   = length(var.devs)
 	zone_id = data.aws_route53_zone.primary.zone_id
 	name    = var.devs[count.index]
 	type    = "A"
 	ttl     = "300"
-	records = [digitalocean_droplet.my-vm[count.index].ipv4_address]
+	records = [digitalocean_droplet.my_vm[count.index].ipv4_address]
 }
 
 
 resource "local_file" "info" {
         content = templatefile(
 	          "info.tftpl", {
-			names = aws_route53_record.terraform-8[*].name,
-			ips = digitalocean_droplet.my-vm[*].ipv4_address
+			names = aws_route53_record.terraform_8[*].name,
+			ips = digitalocean_droplet.my_vm[*].ipv4_address
 			pass = random_password.secret[*].result
 			})
         filename = "inventory.txt"
