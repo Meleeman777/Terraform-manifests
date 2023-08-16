@@ -1,0 +1,19 @@
+server {
+  listen 80;
+  listen [::]:80;
+
+  root /var/www/second/html/;
+  index2.html;
+
+  server_name second.com www.second.com;
+
+  location /hello {
+	return 200 'OK';
+  }
+  location / {
+        try_files $uri.html $uri $uri/ =404;
+  }
+  
+  
+  
+}
