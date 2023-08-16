@@ -19,17 +19,17 @@
     - name: Apply Nginx template
       template:
         src: ./nginx.conf.j2
-        dest: /etc/nginx/
+        dest: /etc/nginx/nginx.conf
       notify: Reload Nginx
     - name: Apply Nginx template
       template:
         src: ./nginx1.conf.j2
-        dest: /etc/nginx/sites-available/
+        dest: /etc/nginx/sites-available/nginx1.conf
       notify: Reload Nginx
     - name: Apply Nginx template
       template:
         src: ./nginx2.conf.j2
-        dest: /etc/nginx/sites-available/
+        dest: /etc/nginx/sites-available/nginx2.conf
       notify: Reload Nginx
     - name: Creating link nginx1
       file:
