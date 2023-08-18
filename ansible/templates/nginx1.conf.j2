@@ -1,0 +1,22 @@
+server {
+  listen 80;
+  listen [::]:80;
+	
+  root /var/www/first/html/;
+  index1.html;
+
+  server_name first.com www.first.com;
+
+  location /hello {
+	return 200 'OK';
+  }
+  location / {
+	try_files $uri.html $uri $uri/ =404;
+  }
+  
+
+
+
+}
+
+

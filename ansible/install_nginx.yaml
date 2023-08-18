@@ -1,0 +1,51 @@
+- name: set up webserver
+  hosts: all
+  tasks:
+    - name: nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+    - name: start nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+    - name: Allow all access to tcp port 80
+      ufw:
+        rule: allow
+        port: '80'
+        proto: tcp
+    - name: Apply Nginx template
+      template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+      notify: Reload Nginx
+    - name: Apply Nginx template
+      template:
+        src: nginx1.conf.j2
+        dest: /etc/nginx/sites-available/nginx1.conf
+      notify: Reload Nginx
+    - name: Apply Nginx template
+      template:
+        src: nginx2.conf.j2
+        dest: /etc/nginx/sites-available/nginx2.conf
+      notify: Reload Nginx
+    - name: Creating link nginx1
+      file:
+        src: /etc/nginx/sites-available/nginx1.conf
+        dest: /etc/nginx/sites-enabled/nginx1.conf
+        state: link
+      notify: Reload Nginx
+    - name: Creating link nginx2
+      file:
+        src: /etc/nginx/sites-available/nginx2.conf
+        dest: /etc/nginx/sites-enabled/nginx2.conf
+        state: link
+      notify: Reload Nginx
+  handlers:
+    - name: Reload Nginx
+      service:
+        name: nginx
+        state: reloaded
+
