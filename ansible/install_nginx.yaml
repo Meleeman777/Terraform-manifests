@@ -1,13 +1,7 @@
 - name: set up webserver
   hosts: all
-  vars:
-    site_available_path: /etc/nginx/sites-available
-    site_enabled_path: /etc/nginx/sites-enabled
-    nginx_path: /etc/nginx
-    nginx: nginx.conf
-    nginx1: nginx1.conf
-    nginx2: nginx2.conf
-    nginx_state: present
+  vars_files:
+    - vars.yaml
   tasks:
     - name: nginx
       apt:
