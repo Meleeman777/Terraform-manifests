@@ -10,6 +10,7 @@ No requirements required
 
 Role Variables
 --------------
+```
 # Path to a directory for a nginx virtualhosts configs
 site_available_path: /etc/nginx/sites-available 
 # Path to a directory for a nginx vritualhosts configs to enable hosts
@@ -33,7 +34,7 @@ nginx_settings:
     value:  "70"
   - key: gzip
     value:  "on"
-
+```
 
 Dependencies
 ------------
