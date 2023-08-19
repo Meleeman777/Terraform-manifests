@@ -1,0 +1,5 @@
+---
+# vars file for make_letsencrypt_cert
+letsencrypt_email: meleemanhs@gmail.com
+domain_name: abrams.devops.rebrain.srwx.net
+make_cert: certbot certonly --standalone --agree-tos --preferred-challenges http -d abrams.devops.rebrain.srwx.net

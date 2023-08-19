@@ -3,3 +3,4 @@
 
   roles:
     - deploy_nginx
+    - make_letsencrypt_cert

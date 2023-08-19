@@ -10,10 +10,15 @@
     name: nginx
     state: started
     enabled: yes
-- name: Allow all access to tcp port 80
+- name: Allow all access to  port 80
   ufw:
     rule: allow
     port: '80'
+    proto: tcp
+- name: Allow all access to port 443
+  ufw:
+    rule: allow
+    port: '443'
     proto: tcp
 - name: Apply Nginx template
   template:

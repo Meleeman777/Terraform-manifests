@@ -1,37 +1,17 @@
 user  www-data;
-worker_processes  auto;
-
-error_log  /var/log/nginx/error.log warn;
-pid        /var/run/nginx.pid;
+worker_processes {{ wp_value }};
+pid  {{ pid_path }};
 
 
 events {
-    worker_connections  1024;
+    worker_connections {{ wc_value }};
 }
 
 
 http {
-    include       /etc/nginx/mime.types;
-    default_type  application/octet-stream;
-
-    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                      '$status $body_bytes_sent "$http_referer" '
-                      '"$http_user_agent" "$http_x_forwarded_for"';
-
-    access_log  /var/log/nginx/access.log  main;
-    
     {% for item in nginx_settings %}
     {{ item['key'] }} {{ item['value'] }};
     {% endfor %}
-
-    server {
-        listen 80;
-
-        location = / {
-            add_header Content-Type text/plain always;
-            return 200 'Welcome to the training program RebrainMe: Docker!\n';
-        }
-    }
 
 }
 

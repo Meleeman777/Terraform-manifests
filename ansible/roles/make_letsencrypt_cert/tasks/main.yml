@@ -1,0 +1,31 @@
+---
+# tasks file for make_letsencrypt_cert
+- name: install letsencrypt
+  apt:
+    name: letsencrypt
+    state: present
+    update_cache: yes
+- name: install certbot
+  apt:
+    name: python3-certbot-nginx
+    state: present
+    update_cache: yes
+- name: create letsencrypt directory
+  file:
+    name: /var/www/letsencrypt
+    state: directory
+- name: Create letsencrypt certificate
+  command: "letsencrypt certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ domain_name }}"
+  args:
+    creates: "/etc/letsencrypt/live/{{ domain_name }}"
+- name: Generate dhparams
+  shell: openssl dhparam -out /etc/nginx/dhparams.pem 2048
+  args:
+    creates: /etc/nginx/dhparams.pem
+  notify: Reload Nginx
+- name: Add letsencrypt cronjob for cert renewal
+  cron:
+    name: letsencrypt_renewal
+    special_time: weekly
+    job: "letsencrypt --renew certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ domain_name }}"
+  notify: Reload Nginx
