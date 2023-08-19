@@ -46,10 +46,12 @@ Example Playbook
 
 How to use:
 
+```
  hosts: all
 
  roles:
    - deploy_nginx
+```
 
 License
 -------
@@ -59,4 +61,4 @@ BSD
 Author Information
 ------------------
 
-Be free to ask questions on my telegram @Meleeman777
+- Be free to ask questions on my telegram @Meleeman777 :heart:
