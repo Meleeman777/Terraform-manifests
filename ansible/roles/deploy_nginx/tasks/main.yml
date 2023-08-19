@@ -1,0 +1,37 @@
+---
+# tasks file for deploy_nginx
+- name: nginx
+  apt:
+    name: nginx
+    state: '{{ nginx_state }}'
+    update_cache: yes
+- name: start nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+- name: Allow all access to tcp port 80
+  ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+- name: Apply Nginx template
+  template:
+    src: '{{ nginx }}.j2'
+    dest: '{{ nginx_path }}/{{ nginx }}'
+  notify: Reload Nginx
+- name: Apply Nginxs template
+  template:
+    src: '{{ item }}.j2'
+    dest: '{{ site_available_path }}/{{ item }}'
+  with_items:
+    - '{{ nginxs }}'
+  notify: Reload Nginx
+- name: Creating link
+  file:
+    src: '{{ site_available_path }}/{{ item }}'
+    dest: '{{ site_enabled_path }}/{{ item }}'
+    state: link
+  with_items:
+    - '{{ nginxs }}'
+  notify: Reload Nginx
