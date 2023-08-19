@@ -10,16 +10,21 @@ No requirements required
 
 Role Variables
 --------------
-
-site_available_path: /etc/nginx/sites-available ### Path to a directory for a nginx virtualhosts configs
-site_enabled_path: /etc/nginx/sites-enabled     ### Path to a directory for a nginx vritualhosts configs to enable hosts
-nginx_path: /etc/nginx                          ### Path to a nginx`s config directory
+### Path to a directory for a nginx virtualhosts configs
+site_available_path: /etc/nginx/sites-available 
+### Path to a directory for a nginx vritualhosts configs to enable hosts
+site_enabled_path: /etc/nginx/sites-enabled     
+### Path to a nginx`s config directory
+nginx_path: /etc/nginx                          
 nginx: nginx.conf 
-nginx_state: present                            ### State of nginx
-nginxs:                                         ### List of nginx`s configs
+### State of nginx
+nginx_state: present  
+### List of nginx`s configs
+nginxs: 
   - nginx1.conf
   - nginx2.conf
-nginx_settings:                                 ### Map of nginx settings
+### Map of nginx`s settings
+nginx_settings:
   - key:  sendfile
     value: "on"
   - key: tcp_nopush
