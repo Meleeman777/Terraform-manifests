@@ -3,12 +3,12 @@
 
 A role for deploying nginx`s configs to diffent hosts.
 
-Requirements
+### Requirements
 ------------
 
 No requirements required
 
-Role Variables
+### Role Variables
 --------------
 ```
 # Path to a directory for a nginx virtualhosts configs
@@ -36,12 +36,12 @@ nginx_settings:
     value:  "on"
 ```
 
-Dependencies
+### Dependencies
 ------------
 
 No dependencies required
 
-Example Playbook
+###Example Playbook
 ----------------
 
 How to use:
@@ -53,12 +53,12 @@ How to use:
    - deploy_nginx
 ```
 
-License
+### License
 -------
 
 BSD
 
-Author Information
+### Author Information
 ------------------
 
 - Be free to ask questions on my telegram @Meleeman777 :heart:
