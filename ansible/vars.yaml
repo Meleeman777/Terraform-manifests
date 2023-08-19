@@ -5,4 +5,15 @@ nginx: nginx.conf
 nginx1: nginx1.conf
 nginx2: nginx2.conf
 nginx_state: present
-
+nginxs:
+  - nginx1.conf
+  - nginx2.conf
+nginx_settings:
+  - key:  sendfile
+    value: "on"
+  - key: tcp_nopush
+    value: "on"
+  - key: keepalive_timeout
+    value:  "70"
+  - key: gzip
+    value:  "on"

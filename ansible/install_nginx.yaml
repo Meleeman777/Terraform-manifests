@@ -23,27 +23,20 @@
         src: '{{ nginx }}.j2'
         dest: '{{ nginx_path }}/{{ nginx }}'
       notify: Reload Nginx
-    - name: Apply Nginx template
+    - name: Apply Nginxs template
       template:
-        src: '{{ nginx1 }}.j2'
-        dest: '{{ site_available_path }}/{{ nginx1 }}'
+        src: '{{ item }}.j2'
+        dest: '{{ site_available_path }}/{{ item }}'
+      with_items:
+        - '{{ nginxs }}'
       notify: Reload Nginx
-    - name: Apply Nginx template
-      template:
-        src: '{{ nginx2 }}.j2'
-        dest: '{{ site_available_path }}/{{ nginx2 }}'
-      notify: Reload Nginx
-    - name: Creating link nginx1
+    - name: Creating link
       file:
-        src: '{{ site_available_path }}/{{ nginx1 }}'
-        dest: '{{ site_enabled_path }}/{{ nginx1 }}'
+        src: '{{ site_available_path }}/{{ item }}'
+        dest: '{{ site_enabled_path }}/{{ item }}'
         state: link
-      notify: Reload Nginx
-    - name: Creating link nginx2
-      file:
-        src: '{{ site_available_path }}/{{ nginx2 }}'
-        dest: '{{ site_enabled_path }}/{{ nginx2 }}'
-        state: link
+      with_items:
+        - '{{ nginxs }}'
       notify: Reload Nginx
   handlers:
     - name: Reload Nginx
