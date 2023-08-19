@@ -1,31 +1,49 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+A role for deploying nginx`s configs to diffent hosts.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+No requirements required
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+site_available_path: /etc/nginx/sites-available ### Path to a directory for a nginx virtualhosts configs
+site_enabled_path: /etc/nginx/sites-enabled     ### Path to a directory for a nginx vritualhosts configs to enable hosts
+nginx_path: /etc/nginx                          ### Path to a nginx`s config directory
+nginx: nginx.conf 
+nginx_state: present                            ### State of nginx
+nginxs:                                         ### List of nginx`s configs
+  - nginx1.conf
+  - nginx2.conf
+nginx_settings:                                 ### Map of nginx settings
+  - key:  sendfile
+    value: "on"
+  - key: tcp_nopush
+    value: "on"
+  - key: keepalive_timeout
+    value:  "70"
+  - key: gzip
+    value:  "on"
+
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+No dependencies required
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+How to use:
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+ hosts: all
+
+ roles:
+   - deploy_nginx
 
 License
 -------
@@ -35,4 +53,4 @@ BSD
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Be free to ask questions on my telegram @Meleeman777
