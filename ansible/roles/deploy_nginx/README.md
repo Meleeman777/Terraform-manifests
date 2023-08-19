@@ -41,7 +41,7 @@ nginx_settings:
 
 No dependencies required
 
-###Example Playbook
+### Example Playbook
 ----------------
 
 How to use:
