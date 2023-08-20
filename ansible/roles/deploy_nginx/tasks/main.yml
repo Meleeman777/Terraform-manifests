@@ -40,3 +40,7 @@
   with_items:
     - '{{ nginxs }}'
   notify: Reload Nginx
+- name: Remove defaults
+  file:
+    state: absent
+    path: "{{ site_enabled_path }}/default"

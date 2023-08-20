@@ -11,9 +11,7 @@
     state: present
     update_cache: yes
 - name: create letsencrypt directory
-  file:
-    name: /var/www/letsencrypt
-    state: directory
+  command: "mkdir -p /var/www/letsencrypt/.well-known/acme-challenge && echo Success > /var/www/html/.well-known/acme-challenge/example.html"
 - name: Flush handlers
   meta: flush_handlers
 - name: Create letsencrypt certificate
