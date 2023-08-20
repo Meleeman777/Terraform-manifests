@@ -14,6 +14,8 @@
   file:
     name: /var/www/letsencrypt
     state: directory
+- name: Flush handlers
+  meta: flush_handlers
 - name: Create letsencrypt certificate
   command: "letsencrypt certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ domain_name }}"
   args:
@@ -27,5 +29,4 @@
   cron:
     name: letsencrypt_renewal
     special_time: weekly
-    job: "letsencrypt --renew certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ domain_name }}"
-  notify: Reload Nginx
+    job: "letsencrypt --renew certonly -n --webroot -w /var/www/letsencrypt -m {{ letsencrypt_email }} --agree-tos -d {{ domain_name }} && service nginx reload"
