@@ -27,20 +27,22 @@
   notify: Reload Nginx
 - name: Apply Nginxs template
   template:
-    src: '{{ item }}.j2'
-    dest: '{{ site_available_path }}/{{ item }}'
-  with_items:
-    - '{{ nginxs }}'
+    src: '{{ nginx_http }}.j2'
+    dest: '{{ site_available_path }}/{{ nginx_http }}'
   notify: Reload Nginx
 - name: Creating link
   file:
-    src: '{{ site_available_path }}/{{ item }}'
-    dest: '{{ site_enabled_path }}/{{ item }}'
+    src: '{{ site_available_path }}/{{ nginx_http }}'
+    dest: '{{ site_enabled_path }}/{{ nginx_http }}'
     state: link
-  with_items:
-    - '{{ nginxs }}'
   notify: Reload Nginx
 - name: Remove defaults
   file:
     state: absent
     path: "{{ site_enabled_path }}/default"
+  notify: Reload Nginx
+- name: Install nginx site for specified site
+  template:
+    src: nginx-le.j2
+    dest:  "{{ site_enabled_path }}/le"
+  notify: Reload Nginx

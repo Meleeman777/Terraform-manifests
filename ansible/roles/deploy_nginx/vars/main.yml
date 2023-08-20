@@ -5,8 +5,7 @@ site_enabled_path: /etc/nginx/sites-enabled
 nginx_path: /etc/nginx
 nginx: nginx.conf
 nginx_state: present
-nginxs:
-  - nginx-http
+nginx_http: nginx-http
 pid_path: /var/run/nginx.pid
 wp_value: auto
 wc_value: 768
