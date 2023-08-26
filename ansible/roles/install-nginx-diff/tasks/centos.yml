@@ -28,3 +28,8 @@
     src: '{{ nginx }}.j2'
     dest: '{{ nginx_path }}/{{ nginx }}'
   notify: Reload Nginx
+- name:
+  user:
+    name: '{{ centos_user }}'
+  notify: Reload Nginx
+
