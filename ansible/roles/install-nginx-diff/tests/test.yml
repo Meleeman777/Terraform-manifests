@@ -1,9 +1,0 @@
----
-- hosts: localhost
-  remote_user: root
-  roles:
-<<<<<<<< HEAD:ansible/roles/install-nginx-diff/tests/test.yml
-    - install-nginx-diff
-========
-    - deploy-nginx-vault
->>>>>>>> ansible06:ansible/roles/deploy-nginx-vault/tests/test.yml

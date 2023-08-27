@@ -2,4 +2,4 @@
   hosts: all
 
   roles:
-    - install-nginx-diff
+    - deploy-nginx-vault

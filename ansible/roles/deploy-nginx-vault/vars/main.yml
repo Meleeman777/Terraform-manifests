@@ -1,19 +1,10 @@
 ---
-<<<<<<<< HEAD:ansible/roles/install-nginx-diff/vars/main.yml
-# vars file for deploy_nginx
-centos_user: www-data
-nginx_path: /etc/nginx
-nginx: nginx.conf
-state: present
-nginx_http: nginx-http
-========
 # vars file for deploy-nginx-vault
 site_available_path: /etc/nginx/sites-available
 site_enabled_path: /etc/nginx/sites-enabled
 nginx_path: /etc/nginx
 nginx: nginx.conf
 nginx_state: present
->>>>>>>> ansible06:ansible/roles/deploy-nginx-vault/vars/main.yml
 pid_path: /var/run/nginx.pid
 wp_value: auto
 wc_value: 768
@@ -42,9 +33,6 @@ nginx_settings:
     value: /etc/nginx/conf.d/*.conf
   - key: include
     value: /etc/nginx/sites-enabled/*
-<<<<<<<< HEAD:ansible/roles/install-nginx-diff/vars/main.yml
-domain_name: abrams.devops.rebrain.srwx.net
-========
 server_settings:
   - key: listen
     value: 443 ssl
@@ -63,4 +51,3 @@ cert_path: /etc/ssl
 cert: example.crt
 key: example.key
 user: ivan
->>>>>>>> ansible06:ansible/roles/deploy-nginx-vault/vars/main.yml
