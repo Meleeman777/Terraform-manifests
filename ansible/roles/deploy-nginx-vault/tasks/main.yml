@@ -1,0 +1,58 @@
+---
+# tasks file for deploy-nginx-vault
+- name: nginx
+  apt:
+    name: nginx
+    state: '{{ nginx_state }}'
+    update_cache: yes
+- name: start nginx
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+- name: Allow all access to  port 80
+  ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+- name: Allow all access to port 443
+  ufw:
+    rule: allow
+    port: '443'
+    proto: tcp
+- name: Apply Nginx template
+  template:
+    src: '{{ nginx }}.j2'
+    dest: '{{ nginx_path }}/{{ nginx }}'
+  notify: Reload Nginx
+- name: Apply Nginxs template
+  template:
+    src: '{{ nginx_server }}.j2'
+    dest: '{{ site_available_path }}/{{ nginx_server }}'
+  notify: Reload Nginx
+- name: Creating link
+  file:
+    src: '{{ site_available_path }}/{{ nginx_server }}'
+    dest: '{{ site_enabled_path }}/{{ nginx_server }}'
+    state: link
+  notify: Reload Nginx
+- name: Remove defaults
+  file:
+    state: absent
+    path: "{{ site_enabled_path }}/default"
+  notify: Reload Nginx
+- name: Create user
+  user:
+    name: '{{ user }}'
+- name: Copy Private_key
+  copy:
+    src: '{{ private_key }}'
+    dest: '{{ private_key_path }}/'
+- name: Copy cert and key
+  copy:
+    src: '{{ item }}'
+    dest: '{{ cert_path }}/'
+  loop:
+    - '{{ cert }}'
+    - '{{ key }}'
+  notify: Reload Nginx
