@@ -1,0 +1,53 @@
+---
+# vars file for deploy-nginx-vault
+site_available_path: /etc/nginx/sites-available
+site_enabled_path: /etc/nginx/sites-enabled
+nginx_path: /etc/nginx
+nginx: nginx.conf
+nginx_state: present
+pid_path: /var/run/nginx.pid
+wp_value: auto
+wc_value: 768
+nginx_settings:
+  - key: sendfile
+    value: "on"
+  - key: tcp_nopush
+    value: "on"
+  - key: tcp_nodelay
+    value: "on"
+  - key: keepalive_timeout
+    value: "70"
+  - key: gzip
+    value: "on"
+  - key: types_hash_max_size
+    value: 2048
+  - key: include
+    value: /etc/nginx/mime.types
+  - key: default_type
+    value: application/octet-stream
+  - key: access_log
+    value: /var/log/nginx/access.log
+  - key: error_log
+    value: /var/log/nginx/error.log
+  - key: include
+    value: /etc/nginx/conf.d/*.conf
+  - key: include
+    value: /etc/nginx/sites-enabled/*
+server_settings:
+  - key: listen
+    value: 443 ssl
+  - key: server_name
+    value: abrams.devops.rebrain.srwx.net
+  - key: ssl_certificate
+    value: /etc/letsencrypt/live/abrams.devops.rebrain.srwx.net/fullchain.pem
+  - key: ssl_certificate_key
+    value: /etc/letsencrypt/live/abrams.devops.rebrain.srwx.net/privkey.pem
+  - key: ssl_trusted_certificate
+    value: /etc/letsencrypt/live/abrams.devops.rebrain.srwx.net/fullchain.pem
+nginx_server: nginx_le
+private_key: ansible10
+private_key_path: /home/ivan/.ssh
+cert_path: /etc/ssl
+cert: example.crt
+key: example.key
+user: ivan

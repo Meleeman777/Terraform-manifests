@@ -1,6 +1,0 @@
-- name: set up webserver
-  hosts: all
-
-  roles:
-    - deploy_nginx
-    - make_letsencrypt_cert

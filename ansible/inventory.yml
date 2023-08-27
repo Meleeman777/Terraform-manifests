@@ -1,5 +1,0 @@
-all:
-  hosts:
-     my-vm:
-       ansible_host: 104.248.124.170
-
