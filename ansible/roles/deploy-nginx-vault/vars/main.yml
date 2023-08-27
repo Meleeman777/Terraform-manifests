@@ -37,14 +37,12 @@ server_settings:
   - key: listen
     value: 443 ssl
   - key: server_name
-    value: abrams.devops.rebrain.srwx.net
+    value: example.com
   - key: ssl_certificate
-    value: /etc/letsencrypt/live/abrams.devops.rebrain.srwx.net/fullchain.pem
+    value: /etc/ssl/example.crt
   - key: ssl_certificate_key
-    value: /etc/letsencrypt/live/abrams.devops.rebrain.srwx.net/privkey.pem
-  - key: ssl_trusted_certificate
-    value: /etc/letsencrypt/live/abrams.devops.rebrain.srwx.net/fullchain.pem
-nginx_server: nginx_le
+    value: /etc/ssl/example.key
+nginx_server: nginx-le
 private_key: ansible10
 private_key_path: /home/ivan/.ssh
 cert_path: /etc/ssl

@@ -3,7 +3,7 @@ server {
     {{ item['key'] }} {{ item['value'] }};
     {% endfor %}    
 
-    root /var/www/{{ domain_name }};
+    root /var/www/;
     index index.html index.htm;
 
     location / {
