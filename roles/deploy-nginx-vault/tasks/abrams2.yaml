@@ -1,0 +1,25 @@
+- name: Apply Nginx template
+  template:
+    src: '{{ nginx2 }}.j2'
+    dest: '{{ nginx_path }}/{{ nginx }}'
+    mode: 0644
+  notify: Reload Nginx
+- name: Apply Nginxs template
+  template:
+    src: '{{ nginx_server }}.j2'
+    dest: '{{ site_available_path }}/{{ nginx_server }}'
+    mode: 0644
+  notify: Reload Nginx
+- name: Creating link
+  file:
+    src: '{{ site_available_path }}/{{ nginx_server }}'
+    dest: '{{ site_enabled_path }}/{{ nginx_server }}'
+    state: link
+  notify: Reload Nginx
+- name: Copy index.html
+  copy:
+    src: '{{ index }}'
+    dest: '{{ index_path }}'
+    mode: 0644
+  notify: Reload Nginx
+

@@ -1,0 +1,16 @@
+server {
+  listen 80;
+  listen [::]:80;
+	
+  root {{ index_path }};
+
+  server_name backend.com www.backend.com;
+  location /hello {
+	return 200 'OK';
+  }
+  location / {
+	try_files $uri.html $uri $uri/ =404;
+  }
+  
+
+}

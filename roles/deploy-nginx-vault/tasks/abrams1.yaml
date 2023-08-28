@@ -1,0 +1,7 @@
+- name: Apply Nginx template
+  template:
+    src: '{{ nginx }}.j2'
+    dest: '{{ nginx_path }}/{{ nginx }}'
+    mode: 0644
+  notify: Reload Nginx
+

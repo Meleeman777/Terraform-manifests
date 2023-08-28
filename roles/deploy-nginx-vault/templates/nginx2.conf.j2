@@ -11,21 +11,4 @@ http {
     {% for item in nginx_settings %}
     {{ item['key'] }} {{ item['value'] }};
     {% endfor %}
-
-    upstream backend {
-        server {{ hostvars['abrams2'].ansible_host }};
-
-    }
-
-    server {
-        listen 80;
-
-        location / {
-            proxy_pass http://backend;
-        }
-    }
-
-
 }
-
-

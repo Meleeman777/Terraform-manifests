@@ -1,7 +1,7 @@
 all:
   hosts:
      abrams1:
-       ansible_host: 167.99.15.247
+       ansible_host: 157.245.94.245
      abrams2:
-       ansible_host: 24.199.80.124
+       ansible_host: 157.245.94.43
 
