@@ -1,0 +1,20 @@
+---
+# vars file for install-nginx
+site_available_path: /etc/nginx/sites-available
+site_enabled_path: /etc/nginx/sites-enabled
+nginx_path: /etc/nginx
+nginx: nginx.conf
+nginx_state: present
+nginxs:
+  - nginx1.conf
+  - nginx2.conf
+nginx_settings:
+  - key:  sendfile
+    value: "on"
+  - key: tcp_nopush
+    value: "on"
+  - key: keepalive_timeout
+    value:  "70"
+  - key: gzip
+    value:  "on"
+

@@ -49,3 +49,8 @@ resource "local_file" "ansible_inventory" {
   filename = "ansible/inventory.yml"
 }
 
+resource "terraform_data" "ansible" {
+  provisioner "local-exec" {
+    command = "ansible-playbook install_nginx.yaml --user=root --private-key=~/.ssh/ansible_key"
+  }
+}
