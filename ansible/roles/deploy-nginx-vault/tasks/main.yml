@@ -4,12 +4,12 @@
   apt:
     name: nginx
     state: '{{ nginx_state }}'
-    update_cache: yes
+    update_cache: true
 - name: start nginx
   service:
     name: nginx
     state: started
-    enabled: yes
+    enabled: true
 - name: Allow all access to  port 80
   ufw:
     rule: allow
@@ -24,11 +24,13 @@
   template:
     src: '{{ nginx }}.j2'
     dest: '{{ nginx_path }}/{{ nginx }}'
+    mode: 0644
   notify: Reload Nginx
 - name: Apply Nginxs template
   template:
     src: '{{ nginx_server }}.j2'
     dest: '{{ site_available_path }}/{{ nginx_server }}'
+    mode: 0644
   notify: Reload Nginx
 - name: Creating link
   file:
@@ -48,10 +50,12 @@
   copy:
     src: '{{ private_key }}'
     dest: '{{ private_key_path }}/'
+    mode: 0644
 - name: Copy cert and key
   copy:
     src: '{{ item }}'
     dest: '{{ cert_path }}/'
+    mode: 0644
   loop:
     - '{{ cert }}'
     - '{{ key }}'

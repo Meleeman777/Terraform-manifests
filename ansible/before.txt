@@ -1,0 +1,25 @@
+[91minternal-error[0m[2m:[0m [31mUnexpected error code 1 from execution of: ansible-playbook --syntax-check install_nginx.yaml[0m
+[34minstall_nginx.yaml[0m:1 [2m[WARNING]: No inventory was parsed, only implicit localhost is available[0m
+[2m[WARNING]: provided hosts list is empty, only localhost is available. Note that[0m
+[2mthe implicit localhost does not match 'all'[0m
+[2mERROR! Attempting to decrypt but no vault secrets found[0m
+
+
+[91myaml[0m[2m:[0m [31mtruthy value should be one of [false, true][0m [2;91m(truthy)[0m
+[34mroles/deploy-nginx-vault/tasks/main.yml[0m:7
+
+[91myaml[0m[2m:[0m [31mtruthy value should be one of [false, true][0m [2;91m(truthy)[0m
+[34mroles/deploy-nginx-vault/tasks/main.yml[0m:12
+
+[91mrisky-file-permissions[0m[2m:[0m [31mFile permissions unset or incorrect[0m
+[34mroles/deploy-nginx-vault/tasks/main.yml[0m:23 [2mTask/Handler: Apply Nginx template[0m
+
+[91mrisky-file-permissions[0m[2m:[0m [31mFile permissions unset or incorrect[0m
+[34mroles/deploy-nginx-vault/tasks/main.yml[0m:28 [2mTask/Handler: Apply Nginxs template[0m
+
+[91mrisky-file-permissions[0m[2m:[0m [31mFile permissions unset or incorrect[0m
+[34mroles/deploy-nginx-vault/tasks/main.yml[0m:47 [2mTask/Handler: Copy Private_key[0m
+
+[91mrisky-file-permissions[0m[2m:[0m [31mFile permissions unset or incorrect[0m
+[34mroles/deploy-nginx-vault/tasks/main.yml[0m:51 [2mTask/Handler: Copy cert and key[0m
+

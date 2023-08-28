@@ -8,7 +8,7 @@ variable "droplets" {
 	},
 	{
 	   name  = "abrams2"
-	   image = "centos-7-x64"
+	   image = "ubuntu-18-04-x64"
 	   size  = "s-1vcpu-1gb"
 	}
         ]        
