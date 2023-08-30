@@ -1,7 +1,9 @@
 all:
   hosts:
-     abrams1:
-       ansible_host: 157.245.94.245
-     abrams2:
-       ansible_host: 157.245.94.43
+    load-balancer:
+      ansible_host: 104.248.50.139
+    apps:
+      ansible_host:
+       - 104.248.50.34
+       - 157.230.88.226
 

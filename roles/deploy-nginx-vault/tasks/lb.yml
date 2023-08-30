@@ -4,4 +4,3 @@
     dest: '{{ nginx_path }}/{{ nginx }}'
     mode: 0644
   notify: Reload Nginx
-

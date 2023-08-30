@@ -2,14 +2,10 @@ variable "droplets" {
         type = list
         default = [
         {
-	   name  = "abrams1"
-	   image = "ubuntu-18-04-x64"
-	   size  = "s-1vcpu-1gb"
+	   name  = "abrams-app1"
 	},
 	{
-	   name  = "abrams2"
-	   image = "ubuntu-18-04-x64"
-	   size  = "s-1vcpu-1gb"
+	   name  = "abrams-app2"
 	}
         ]        
 }
@@ -25,4 +21,7 @@ variable "email" {}
 variable "task_name" {}
 variable "access_key" {}
 variable "secret_key" {}
+variable "size" {}
+variable "name" {}
+variable "image" {}
 

@@ -1,8 +1,16 @@
 - name: Apply Nginx template
   template:
+    src: '{{ nginx1 }}.j2'
+    dest: '{{ nginx_path }}/{{ nginx }}'
+    mode: 0644
+  when: inventory_hostname in groups["apps"][0]
+  notify: Reload Nginx
+- name: Apply Nginx template
+  template:
     src: '{{ nginx2 }}.j2'
     dest: '{{ nginx_path }}/{{ nginx }}'
     mode: 0644
+  when: inventory_hostname in groups["apps"][1]
   notify: Reload Nginx
 - name: Apply Nginxs template
   template:
@@ -18,8 +26,15 @@
   notify: Reload Nginx
 - name: Copy index.html
   copy:
-    src: '{{ index }}'
+    src: 'index1.html'
     dest: '{{ index_path }}'
     mode: 0644
+  when: inventory_hostname in groups["apps"][0]
   notify: Reload Nginx
-
+- name: Copy index.html
+  copy:
+    src: 'index2.html'
+    dest: '{{ index_path }}'
+    mode: 0644
+  when: inventory_hostname in groups["apps"][1]
+  notify: Reload Nginx

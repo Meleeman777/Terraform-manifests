@@ -14,28 +14,47 @@ data "aws_route53_zone" "primary" {
         name = "devops.rebrain.srwx.net"
 }
 
+resource "digitalocean_droplet" "droplet-lb" {
+  name     = var.name
+  image    = var.image
+  region   = var.region
+  size     = var.size
+  ssh_keys = [digitalocean_ssh_key.my_public_key.fingerprint , data.external.ssh_rebrain.result.fingerprint]
+  tags     = [var.email, "devops", var.task_name]
+}
 
-resource "digitalocean_droplet" "droplet" {
+
+resource "digitalocean_droplet" "droplet-apps" {
   for_each = { for droplet in var.droplets : droplet.name => droplet } 
   name     = each.value.name
-  image    = each.value.image
+  image    = var.image
   region   = var.region
-  size     = each.value.size
+  size     = var.size
   ssh_keys = [digitalocean_ssh_key.my_public_key.fingerprint , data.external.ssh_rebrain.result.fingerprint]
   tags     = [var.email, "devops", var.task_name]
 
 }
 
+resource "aws_route53_record" "ansible_12" {
+  zone_id    = data.aws_route53_zone.primary.zone_id
+  name       = var.name
+  type       = "A"
+  ttl        = 300
+  records    = [digitalocean_droplet.droplet-lb.ipv4_address]
+}
+
+
 
 resource "local_file" "ansible_inventory" {
   content = templatefile("inventory.tftpl",
     {
-		names = [for d in var.droplets: d.name]#
-	        ips =  values(digitalocean_droplet.droplet)[*].ipv4_address 
-
+	lbnames =  digitalocean_droplet.droplet-lb[*].name,
+        appnames = [for d in var.droplets: d.name],
+        lbips =  digitalocean_droplet.droplet-lb[*].ipv4_address, 
+        appips = values(digitalocean_droplet.droplet-apps)[*].ipv4_address       
     }
   )
-  filename = "ansible/inventory.yml"
+  filename = "ansible/hosts"
 }
 
 resource "terraform_data" "ansible" {

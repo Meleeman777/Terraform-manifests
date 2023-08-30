@@ -13,13 +13,14 @@ http {
     {% endfor %}
 
     upstream backend {
-        server {{ hostvars['abrams2'].ansible_host }};
-
+        {% for item in groups['apps'] %}
+        server  {{ item }};
+	{% endfor %}
     }
 
     server {
         listen 80;
-
+        server_name {{server_name}};
         location / {
             proxy_pass http://backend;
         }

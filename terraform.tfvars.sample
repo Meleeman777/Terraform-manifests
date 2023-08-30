@@ -6,3 +6,7 @@ task_name =
 access_key =
 secret_key =
 server_count = 
+name =
+image =
+size =
+awsname =

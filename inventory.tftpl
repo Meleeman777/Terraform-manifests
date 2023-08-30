@@ -1,7 +1,9 @@
-all:
-  hosts:
-%{ for index, name in names ~}
-     ${name}:
-       ansible_host: ${ips[index]}
+[load-balancer]
+%{ for index, lbnames in lbnames ~}
+${lbips[index]}
+%{ endfor ~}
+[apps]
+%{ for index, appnames in appnames ~}
+${appips[index]}
 %{ endfor ~}
 

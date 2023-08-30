@@ -4,9 +4,17 @@ server {
 	
   root {{ index_path }};
 
-  server_name backend.com www.backend.com;
+  server_name {{ server_name }} www.{{ server_name }};
+  access_log /var/log/nginx/server.access.log;
+  error_log /var/log/nginx/server.error.log;
+  
   location /hello {
-	return 200 'OK';
+  proxy_pass http://{{server_name }};
+  proxy_set_header Host $host;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_pass_request_headers on;
+
+        return 200 'OK';
   }
   location / {
 	try_files $uri.html $uri $uri/ =404;

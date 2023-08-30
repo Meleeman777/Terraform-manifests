@@ -22,8 +22,8 @@
     path: "{{ site_enabled_path }}/default"
   notify: Reload Nginx
 - name: Performing Tasks for first host
-  include_tasks: abrams1.yaml
-  when: ansible_facts['hostname'] == 'abrams1'
+  include_tasks: lb.yml
+  when: inventory_hostname in groups["load-balancer"]
 - name: Performing Tasks for second host
-  include_tasks: abrams2.yaml
-  when: ansible_facts['hostname'] == 'abrams2'
+  include_tasks: apps.yml
+  when: inventory_hostname in groups["apps"]
