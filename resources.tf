@@ -21,6 +21,7 @@ resource "digitalocean_droplet" "droplet-lb" {
   size     = var.size
   ssh_keys = [digitalocean_ssh_key.my_public_key.fingerprint , data.external.ssh_rebrain.result.fingerprint]
   tags     = [var.email, "devops", var.task_name]
+
 }
 
 
@@ -59,7 +60,7 @@ resource "local_file" "ansible_inventory" {
 
 resource "terraform_data" "ansible" {
   provisioner "local-exec" {
-    command = "ansible-playbook install_nginx.yaml --user=root --private-key=~/.ssh/ansible_key"
+    command = "sleep 10 && ansible-playbook install_nginx.yaml --user=root --private-key=~/.ssh/ansible_key"
   }
   depends_on = [local_file.ansible_inventory]
 }
