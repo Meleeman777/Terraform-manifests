@@ -1,9 +1,0 @@
-all:
-  hosts:
-    load-balancer:
-      ansible_host: 104.248.50.139
-    apps:
-      ansible_host:
-       - 104.248.50.34
-       - 157.230.88.226
-
