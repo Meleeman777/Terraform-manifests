@@ -2,4 +2,4 @@
   hosts: all
 
   roles:
-    - deploy-nginx-vault
+    - load-balancer
